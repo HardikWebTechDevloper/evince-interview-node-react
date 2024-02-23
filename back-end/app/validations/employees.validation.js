@@ -73,8 +73,8 @@ module.exports.getAllEmployees = function (req, res, next) {
     try {
         var body = req.body;
         const schema = Joi.object({
-            page: Joi.number().required().label("Page No"),
-            size: Joi.number().required().label("page Size"),
+            pageNo: Joi.number().required().label("Page No"),
+            pageSize: Joi.number().required().label("page Size"),
             searchValue: Joi.string().allow("").label('Serach Value'),
             sortColumn: Joi.string().allow("").label('Sort Column'),
             sortType: Joi.string().allow("").valid('ASC', 'DESC').label('Sort Type'),

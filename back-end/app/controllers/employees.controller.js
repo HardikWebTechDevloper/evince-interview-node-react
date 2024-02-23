@@ -55,9 +55,9 @@ module.exports.updateEmployee = async (req, res) => {
         });
 
         if (isUpdated) {
-            return res.json(apiResponse(HttpStatus.OK, "Employee details has been saved successfully", {}, true));
+            return res.json(apiResponse(HttpStatus.OK, "Employee details has been updated successfully", {}, true));
         } else {
-            return res.json(apiResponse(HttpStatus.OK, "Something went wrong while create a employee", {}, false));
+            return res.json(apiResponse(HttpStatus.OK, "Something went wrong while update a employee", {}, false));
         }
     } catch (error) {
         return res.json(apiResponse(HttpStatus.EXPECTATION_FAILED, error?.message, {}, false));
@@ -69,13 +69,9 @@ module.exports.getAllEmployees = async (req, res) => {
         let { pageSize, pageNo, searchValue, sortColumn, sortType } = req.body;
 
         // Pagination
-        if (pageSize >= 5) {
-            constants.LIST_LIMIT = pageSize;
-        }
-
         let offset = 0;
         if (pageNo) {
-            offset = (constant.LIST_LIMIT * pageNo) - constant.LIST_LIMIT;
+            offset = (pageSize * pageNo) - pageSize;
         }
 
         // Sorting
@@ -98,10 +94,10 @@ module.exports.getAllEmployees = async (req, res) => {
         }
 
         let employeesData = await Employees.findAll({
-            attributes: ['id', 'name', 'email', 'employeeId', 'mobileNumber', 'createdAt', 'updatedAt'],
+            attributes: ['id', 'name', 'email', 'employeeId', 'mobileNumber', 'age', 'gender', 'phoneNumber', 'createdAt', 'updatedAt'],
             where: whereClauses,
             offset: offset,
-            limit: constants.LIST_LIMIT,
+            limit: pageSize,
             order: [orderBy]
         });
 
