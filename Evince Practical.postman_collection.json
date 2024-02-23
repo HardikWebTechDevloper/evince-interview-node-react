@@ -1,0 +1,112 @@
+{
+	"info": {
+		"_postman_id": "22951a86-bc76-45f4-9898-3a4f2085d3b3",
+		"name": "Evince Practical",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14069175",
+		"_collection_link": "https://interstellar-spaceship-16033.postman.co/workspace/My-Workspace~c544c9ea-27fb-47d6-8c46-f938431e2507/collection/14069175-22951a86-bc76-45f4-9898-3a4f2085d3b3?action=share&source=collection_link&creator=14069175"
+	},
+	"item": [
+		{
+			"name": "Employees",
+			"item": [
+				{
+					"name": "Create an employee",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Martha Joy\",\r\n    \"email\": \"martha.joy@yopmail.com\",\r\n    \"employeeId\": \"MRHJH55999\",\r\n    \"mobileNumber\": \"6177668865\",\r\n    \"gender\": \"Female\",\r\n    \"age\": 28,\r\n    \"phoneNumber\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_URL}}createEmployee",
+							"host": [
+								"{{LOCAL_URL}}createEmployee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Employees",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pageNo\": 1,\r\n    \"pageSize\": 5,\r\n    \"searchValue\": \"\",\r\n    \"sortColumn\": \"\", // name, id etc...\r\n    \"sortType\": \"\" // ASC, DESC\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_URL}}getAllEmployees",
+							"host": [
+								"{{LOCAL_URL}}getAllEmployees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update an employee",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"email\": \"krish.rama@yopmail.com\",\r\n    \"employeeId\": \"AJHJHD8997\",\r\n    \"name\": \"Krish Ram\",\r\n    \"mobileNumber\": \"9877667766\",\r\n    \"gender\": \"Male\",\r\n    \"age\": 35,\r\n    \"phoneNumber\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_URL}}updateEmployee",
+							"host": [
+								"{{LOCAL_URL}}updateEmployee"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "LOCAL_URL",
+			"value": "http://localhost:3300/",
+			"type": "string"
+		}
+	]
+}
