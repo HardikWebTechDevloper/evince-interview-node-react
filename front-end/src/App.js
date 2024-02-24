@@ -73,8 +73,16 @@ function App() {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
+  // API Request handler 
+  const controller = new AbortController();
+
   useEffect(() => {
     fetchEmployeeData(currentPage, currentLimit, searchValue, sortColumnName, sortType);
+
+    // Cleanup Function
+    return () => {
+      controller.abort();
+    }
   }, [currentPage, currentLimit, sortType, sortColumnName, searchValue]);
 
   // Fetch all employees data and load it to datatable
@@ -82,20 +90,29 @@ function App() {
     try {
       setLoading(true);
 
-      axios.post(`${API_URL}/getAllEmployees`, { pageNo, pageSize, searchValue, sortColumn, sortType })
-        .then(response => {
-          const data = response.data.data;
+      axios.post(`${API_URL}/getAllEmployees`,
+        { pageNo, pageSize, searchValue, sortColumn, sortType },
+        { signal: controller.signal }
+      ).then(response => {
+        const data = response.data.data;
 
-          if (data && data.employeesData && data.employeesData.length > 0) {
-            setEmployees(data.employeesData);
-            setTotalRows(data.total);
-          }
-        }).catch(error => {
-          console.error(error);
-          toast.error("Something went wrong");
-        })
+        if (data && data.employeesData && data.employeesData.length > 0) {
+          setEmployees(data.employeesData);
+          setTotalRows(data.total);
+        } else {
+          setEmployees([]);
+          setTotalRows(0);
+        }
+      }).catch(error => {
+        toast.error(error.message);
+      })
     } catch (error) {
-      toast.error("Something went wrong");
+      if (axios.isCancel(error)) {
+        console.log(`Request cancelled:: ${error.message}`);
+        return;
+      }
+
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
